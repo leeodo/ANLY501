@@ -33,12 +33,16 @@ keeps = c("X", "Y", "CalculatedAcres", "ContainmentDateTime", "ControlDateTime",
 fire_hist = fire_hist[, (names(fire_hist) %in% keeps)]
 
 #Fill empty CalculatedAcres with 0s
+length(which(is.na(fire_hist$CalculatedAcres)))
 fire_hist$CalculatedAcres[which(is.na(fire_hist$CalculatedAcres))] = 0
 
 #Fill empty FireCause with Unknown
+unique(fire_hist$FireCause)
+length(which(fire_hist$FireCause == ""))
 fire_hist$FireCause[which(fire_hist$FireCause == "")] = "Unknown"
 
 #Fill empty EstimatedCostToDate with 0s
+length(which(is.na(fire_hist$EstimatedCostToDate)))
 fire_hist$EstimatedCostToDate[which(is.na(fire_hist$EstimatedCostToDate))] = 0
 
 #write cleaned data back to disk
@@ -48,6 +52,9 @@ write.csv(fire_hist, "fire_history_cleaned.csv")
 #meteostat
 LAweather = read.csv("LAweather.csv")
 SACweather = read.csv("SACweather.csv")
+
+length(which(is.na(LAweather$tsun)))
+length(which(is.na(SACweather$tsun)))
 #remove tsun for both data
 LAweather = LAweather[,1:10]
 SACweather = SACweather[,1:10]
